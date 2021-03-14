@@ -1,0 +1,14 @@
+[package]
+name = "chairgap_cef"
+version = "0.1.0"
+authors = ["patr0nus <dk4rest@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1"
+widestring = "0.4"
+chairgap_cef_sys = { path = "./sys" }
+chairgap_cef_macos_src = { path = "./macos_src" }
+chairgap_common = { path = "../common" }

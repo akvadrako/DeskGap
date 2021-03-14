@@ -1,0 +1,22 @@
+[workspace]
+members = [
+	"chairgap",
+	"chairgap/common",
+
+	"chairgap/cef",
+	"chairgap/cef/macos_src",
+	"chairgap/cef/sys",
+
+	"chairgap/macos",
+	"chairgap/macos/macos_src",
+]
+
+[profile.test]
+panic = "abort"
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
+lto = true

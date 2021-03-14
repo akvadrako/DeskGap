@@ -1,0 +1,15 @@
+[package]
+name = "chairgap_macos"
+version = "0.1.0"
+authors = ["patr0nus <dk4rest@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+objc = "0.2"
+block = "0.1"
+cocoa = "0.24"
+core-foundation = "0.9"
+chairgap_common = { path = "../common" }
+chairgap_macos_src = { path = "./macos_src" }
