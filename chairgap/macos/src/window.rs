@@ -2,6 +2,7 @@ use crate::convert::ConvertTo;
 use crate::debug::DebugStrongPtr;
 use crate::strings::{ns_string, ns_to_string};
 use block::{Block, ConcreteBlock, RcBlock};
+use chairgap_common::engine::Engine;
 use chairgap_common::geo::{Point, Size};
 use chairgap_common::window::{Event, Location, TitleStyle, VibrancyUpdate};
 use chairgap_macos_src::*;
@@ -12,7 +13,6 @@ use objc::*;
 use std::cell::Cell;
 use std::os::raw::c_void;
 use std::ptr::{null, null_mut};
-use chairgap_common::engine::Engine;
 use std::rc::Rc;
 
 #[derive(Debug)]
@@ -25,7 +25,7 @@ impl Drop for Window {
 }
 
 impl Window {
-    pub fn new(engine: Rc<dyn Engine>, handle_event: impl Fn(Event) + 'static) -> Self {
+    pub fn new(handle_event: impl Fn(Event) + 'static) -> Self {
         let event_callback = ConcreteBlock::new(move |evt_type: DGWindowEventType| {
             handle_event(match evt_type {
                 DGWindowEventType::Blur => Event::Blur,
@@ -39,14 +39,20 @@ impl Window {
         .copy();
         let event_callback: &Block<(DGWindowEventType,), ()> = &event_callback;
 
-        let window_controller: DebugStrongPtr = { unsafe { StrongPtr::retain(DGWindowControllerNew(event_callback)).into() } };
+        let window_controller: DebugStrongPtr =
+            { unsafe { StrongPtr::retain(DGWindowControllerNew(event_callback)).into() } };
 
-        unsafe { engine.populate_web_view(msg_send![*window_controller, contentView]) }
+        // unsafe { engine.populate_web_view(msg_send![*window_controller, contentView]) }
 
         Self {
             0: window_controller,
         }
     }
+
+    pub fn web_view_parent_handle(&self) -> *mut c_void {
+        unsafe { msg_send![*self.0, contentView] }
+    }
+
     pub fn set_visible(&self, visible: bool) {
         let _: () = unsafe { msg_send![*self.0, setVisible: visible as BOOL] };
     }

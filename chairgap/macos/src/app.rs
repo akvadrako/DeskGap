@@ -8,7 +8,7 @@ use objc::*;
 use std::cell::RefCell;
 use std::os::raw::c_void;
 
-pub fn init<C: Clone + 'static, AppType: App<C>>(ctx: C) -> impl FnOnce() {
+pub fn init<AppType: App>() -> impl FnOnce() {
     objc::rc::autoreleasepool(|| {
         let app: RefCell<Option<AppType>> = RefCell::new(None);
         let block =
@@ -19,7 +19,7 @@ pub fn init<C: Clone + 'static, AppType: App<C>>(ctx: C) -> impl FnOnce() {
                         if existing_app.is_some() {
                             panic!("DGAppEventType_WillLaunch emitted more than once")
                         }
-                        let _ = existing_app.replace(AppType::new(ctx.clone()));
+                        let _ = existing_app.replace(AppType::new());
                     }
                     DGAppEventType::ShouldClose => {
                         let evt_data = unsafe {

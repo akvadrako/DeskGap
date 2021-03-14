@@ -10,9 +10,9 @@ struct DemoApp {
     main_window: Window,
 }
 
-impl App<Context> for DemoApp {
-    fn new(ctx: Context) -> Self {
-        let main_window = Window::new(ctx);
+impl App for DemoApp {
+    fn new() -> Self {
+        let main_window = Window::new();
         main_window.set_auto_hide(true);
         main_window.set_title("Hello ChairGap");
         main_window.set_min_size(Size {

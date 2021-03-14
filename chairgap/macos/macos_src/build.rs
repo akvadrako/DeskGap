@@ -38,7 +38,6 @@ fn main() {
         .flag("-fblocks")
         .file("src/app.m")
         .file("src/DGWindowController.m")
-        .file("src/DGWindowController.m")
         .file("src/web_view.m")
         .compile("chairgap_darwin_src");
 

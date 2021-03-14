@@ -1,16 +1,17 @@
 use super::platform;
+use crate::app::engine;
 use crate::geo::{Point, Size};
 pub use chairgap_common::window::{Event, Location};
 use std::cell::RefCell;
 use std::ops::Deref;
 use std::rc::{Rc, Weak};
 
+use crate::app::Context;
 use crate::fn_utils::{new_context_callback, FnCell};
+use chairgap_common::engine::Engine;
 #[cfg(target_os = "macos")]
 pub use chairgap_common::window::{TitleStyle, VibrancyConfig, VibrancyUpdate};
 use std::fmt::Debug;
-use chairgap_common::engine::Engine;
-use crate::app::Context;
 
 thread_local! {
     static FOCUSED_WINDOW_REF: RefCell<Option<Weak<WindowRef>>> = RefCell::new(None)
@@ -22,7 +23,7 @@ pub struct WindowRef {
 }
 
 impl WindowRef {
-    fn new(engine: Rc<dyn Engine>, handle_evt_fn: impl Fn(&Self, Event) + 'static) -> Rc<Self> {
+    fn new(handle_evt_fn: impl Fn(&Self, Event) + 'static) -> Rc<Self> {
         let (inner_callback, set_context) = new_context_callback(move |this, evt| {
             match evt {
                 Event::Focus => FOCUSED_WINDOW_REF.with(|win_ref| {
@@ -41,7 +42,7 @@ impl WindowRef {
             handle_evt_fn(this, evt)
         });
 
-        let inner = platform::window::Window::new(engine, inner_callback);
+        let inner = platform::window::Window::new(inner_callback);
         let result = Rc::new(Self { inner });
 
         set_context(Rc::downgrade(&result));
@@ -63,6 +64,8 @@ impl WindowRef {
             height: 600,
         });
         inner.set_location(Location::Center);
+
+        unsafe { engine().populate_web_view(inner.web_view_parent_handle()) };
 
         result
     }
@@ -189,14 +192,14 @@ impl Window {
             func(win.as_deref())
         })
     }
-    pub fn new(ctx: Context) -> Self {
+    pub fn new() -> Self {
         let handle_event_fn = FnCell::<WindowRef, Event>::new();
         let auto_hide = Rc::new(RefCell::new(false));
 
         let win_ref = {
             let handle_event_fn = handle_event_fn.clone();
             let auto_hide = auto_hide.clone();
-            WindowRef::new(ctx.0, move |win_ref, evt| {
+            WindowRef::new(move |win_ref, evt| {
                 if evt == Event::Close {
                     if *auto_hide.borrow() {
                         win_ref.set_visible(false)
