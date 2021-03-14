@@ -1,8 +1,6 @@
 #import <AppKit/AppKit.h>
 
 #import "window.h"
-#include "string_utils.h"
-#include "geo_utils.h"
 
 // @interface DGWindowContentView: NSView @end
 // @implementation DGWindowContentView

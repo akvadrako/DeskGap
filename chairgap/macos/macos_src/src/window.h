@@ -1,7 +1,7 @@
 #ifndef DG_WINDOW
 #define DG_WINDOW
 
-#include "geo.h"
+#include <stdint.h>
 
 typedef enum {
     DGWindowEventTypeBlur,

@@ -1,7 +1,7 @@
 use chairgap::app::{run, App, Context};
 use chairgap::geo::{Point, Size};
 use chairgap::window::{Event, TitleStyle, VibrancyConfig, VibrancyUpdate, Window};
-use chairgap_cef::{CefEngine, CefInitConfig};
+// use chairgap_cef::{CefEngine, CefInitConfig};
 use std::cell::RefCell;
 use std::path::Path;
 use std::rc::Rc;
@@ -42,12 +42,12 @@ impl App for DemoApp {
 }
 
 fn main() {
-    let engine = unsafe {
-        chairgap_cef::init_engine(CefInitConfig {
-            single_executable_mode: false,
-            path: Path::new("/Users/Shared/cefclient.app"),
-        })
-    }
-    .unwrap();
-    run::<DemoApp, _>(engine);
+    // let engine = unsafe {
+    //     chairgap_cef::init_engine(CefInitConfig {
+    //         single_executable_mode: false,
+    //         path: Path::new("/Users/Shared/cefclient.app"),
+    //     })
+    // }
+    // .unwrap();
+    // run::<DemoApp, _>(engine);
 }
