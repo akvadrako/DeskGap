@@ -1,4 +1,6 @@
-use chairgap_cef_binding::{dgcef_init, dgcef_run_message_loop, dummy_fn};
+use chairgap_cef_binding::{
+    dgcef_browser_free, dgcef_browser_new, dgcef_init, dgcef_run_message_loop, dummy_fn,
+};
 use chairgap_common::engine::Engine;
 use std::ffi::{c_void, CString};
 use std::os::raw::{c_char, c_int};
@@ -44,6 +46,6 @@ impl Engine for CefEngine {
     }
 
     unsafe fn populate_web_view(&self, parent_handle: *mut c_void) {
-        unimplemented!()
+        dgcef_browser_new(parent_handle);
     }
 }

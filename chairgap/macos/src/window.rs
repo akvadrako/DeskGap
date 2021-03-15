@@ -49,8 +49,8 @@ impl Window {
         }
     }
 
-    pub fn web_view_parent_handle(&self) -> *mut c_void {
-        unsafe { msg_send![*self.0, contentView] }
+    pub fn web_view_container_handle(&self) -> *mut c_void {
+        unsafe { msg_send![*self.0, webViewContainer] }
     }
 
     pub fn set_visible(&self, visible: bool) {

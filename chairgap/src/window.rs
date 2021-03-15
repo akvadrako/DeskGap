@@ -65,7 +65,7 @@ impl WindowRef {
         });
         inner.set_location(Location::Center);
 
-        // unsafe { engine().populate_web_view(inner.web_view_parent_handle()) };
+        unsafe { engine().populate_web_view(inner.web_view_container_handle()) };
 
         result
     }

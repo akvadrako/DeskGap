@@ -17,11 +17,12 @@ namespace {
             const CefString& process_type,
             CefRefPtr<CefCommandLine> command_line
         ) override {
-#ifdef __APPLE__
             if (process_type.empty()) {
+                command_line->AppendSwitch("disable-gpu-shader-disk-cache");
+#ifdef __APPLE__
                 command_line->AppendSwitch("use-mock-keychain");
-            }
 #endif
+            }
         }
         IMPLEMENT_REFCOUNTING(App);
         DISALLOW_COPY_AND_ASSIGN(App);
@@ -58,7 +59,8 @@ extern "C" {
 #ifdef __APPLE__
         std::string framework_path = join_path((const char*)cef_path, "Chromium Embedded Framework.framework");
         std::string dylib_path = join_path((const char*)cef_path, "Chromium Embedded Framework.framework/Chromium Embedded Framework");
-        std::string helper_path = join_path((const char*)cef_path, "cefclient Helper.app/Contents/MacOS/cefclient Helper");
+        std::string helper_path;
+//        std::string helper_path = join_path((const char*)cef_path, "cefclient Helper.app/Contents/MacOS/cefclient Helper");
 #else // LINUX
         std::string framework_path;
         std::string dylib_path = join_path((const char*)cef_path, "libcef.so");
