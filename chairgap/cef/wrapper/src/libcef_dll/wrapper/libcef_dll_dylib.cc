@@ -77,10 +77,10 @@ namespace {
 
 void* g_libcef_handle = nullptr;
 
-void* libcef_get_ptr(const char* path, const char* name) {
+void* libcef_get_ptr(const void* path, const char* name) {
   void* ptr = dlsym(g_libcef_handle, name);
   if (!ptr) {
-    fprintf(stderr, "dlsym %s: %s\n", path, dlerror());
+    fprintf(stderr, "dlsym %s: %s\n", (const char*)path, dlerror());
   }
   return ptr;
 }
@@ -733,7 +733,7 @@ struct libcef_pointers {
     return 0;                                                       \
   }
 
-int libcef_init_pointers(const char* path) {
+int libcef_init_pointers(const void* path) {
   INIT_ENTRY(cef_execute_process);
   INIT_ENTRY(cef_initialize);
   INIT_ENTRY(cef_shutdown);
@@ -935,11 +935,11 @@ int libcef_init_pointers(const char* path) {
 
 }  // namespace
 
-int cef_load_library(const char* path) {
+int cef_load_library(const void* path) {
   if (g_libcef_handle)
     return 0;
 
-  g_libcef_handle = dlopen(path, RTLD_LAZY | RTLD_LOCAL | RTLD_FIRST);
+  g_libcef_handle = dlopen((const char*)path, RTLD_LAZY | RTLD_LOCAL | RTLD_FIRST);
   if (!g_libcef_handle) {
     fprintf(stderr, "dlopen %s: %s\n", path, dlerror());
     return 0;

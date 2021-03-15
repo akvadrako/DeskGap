@@ -219,6 +219,5 @@ fn main() {
             .map(|p| src_prefix.join(p)),
         )
         .include("src");
-
     cc_build.compile("cef_dll_wrapper");
 }

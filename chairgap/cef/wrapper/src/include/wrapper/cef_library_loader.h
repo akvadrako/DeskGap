@@ -45,7 +45,7 @@ extern "C" {
 // Load the CEF library at the specified |path|. Returns true (1) on
 // success and false (0) on failure.
 ///
-int cef_load_library(const char* path);
+int cef_load_library(const void* path);
 
 ///
 // Unload the CEF library that was previously loaded. Returns true (1)
