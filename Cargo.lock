@@ -46,30 +46,7 @@ dependencies = [
  "cfg-if 0.1.10",
  "clang-sys",
  "clap",
- "env_logger 0.7.1",
- "lazy_static",
- "lazycell",
- "log",
- "peeking_take_while",
- "proc-macro2",
- "quote",
- "regex",
- "rustc-hash",
- "shlex",
- "which",
-]
-
-[[package]]
-name = "bindgen"
-version = "0.57.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fd4865004a46a0aafb2a0a5eb19d3c9fc46ee5f063a6cfc605c69ac9ecf5263d"
-dependencies = [
- "bitflags",
- "cexpr",
- "clang-sys",
- "clap",
- "env_logger 0.8.3",
+ "env_logger",
  "lazy_static",
  "lazycell",
  "log",
@@ -139,26 +116,25 @@ name = "chairgap_cef"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "chairgap_cef_macos_src",
- "chairgap_cef_sys",
+ "chairgap_cef_binding",
  "chairgap_common",
  "widestring",
 ]
 
 [[package]]
-name = "chairgap_cef_macos_src"
+name = "chairgap_cef_binding"
 version = "0.1.0"
 dependencies = [
+ "bindgen",
  "cc",
+ "chairgap_cef_wrapper",
 ]
 
 [[package]]
-name = "chairgap_cef_sys"
+name = "chairgap_cef_wrapper"
 version = "0.1.0"
 dependencies = [
- "bindgen 0.57.0",
  "cc",
- "libloading",
 ]
 
 [[package]]
@@ -184,7 +160,7 @@ dependencies = [
 name = "chairgap_macos_src"
 version = "0.1.0"
 dependencies = [
- "bindgen 0.55.1",
+ "bindgen",
  "block",
  "cc",
  "objc",
@@ -295,20 +271,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "44533bbbb3bb3c1fa17d9f2e4e38bbbaf8396ba82193c4cb1b6445d711445d36"
 dependencies = [
  "atty",
- "humantime 1.3.0",
- "log",
- "regex",
- "termcolor",
-]
-
-[[package]]
-name = "env_logger"
-version = "0.8.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "17392a012ea30ef05a610aa97dfb49496e71c9f676b27879922ea5bdf60d9d3f"
-dependencies = [
- "atty",
- "humantime 2.1.0",
+ "humantime",
  "log",
  "regex",
  "termcolor",
@@ -352,12 +315,6 @@ checksum = "df004cfca50ef23c36850aaaa59ad52cc70d0e90243c3c7737a4dd32dc7a3c4f"
 dependencies = [
  "quick-error",
 ]
-
-[[package]]
-name = "humantime"
-version = "2.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9a3a5bfb195931eeb336b2a7b4d761daec841b97f947d34394601737a7bba5e4"
 
 [[package]]
 name = "lazy_static"

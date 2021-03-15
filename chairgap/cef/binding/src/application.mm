@@ -1,13 +1,14 @@
 #import <AppKit/AppKit.h>
 
+#include "application.h"
 #include "include/cef_application_mac.h"
 
-@interface CefApplication : NSApplication <CefAppProtocol> {
+@interface DGCefApplication : NSApplication <CefAppProtocol> {
     @private BOOL handlingSendEvent_;
 }
 @end
 
-@implementation CefApplication
+@implementation DGCefApplication
 - (BOOL)isHandlingSendEvent {
     return handlingSendEvent_;
 }
@@ -23,7 +24,6 @@
 
 @end
 
-extern "C" void dgcef_mac_init_application() {
-    [CefApplication sharedApplication];
+void dgcef_mac_init_application() {
+    [DGCefApplication sharedApplication];
 }
-

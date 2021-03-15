@@ -9,6 +9,5 @@ edition = "2018"
 [dependencies]
 anyhow = "1"
 widestring = "0.4"
-chairgap_cef_sys = { path = "./sys" }
-chairgap_cef_macos_src = { path = "./macos_src" }
+chairgap_cef_binding = { path = "binding" }
 chairgap_common = { path = "../common" }

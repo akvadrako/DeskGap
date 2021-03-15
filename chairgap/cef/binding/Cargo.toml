@@ -1,14 +1,13 @@
 [package]
-name = "chairgap_cef_sys"
+name = "chairgap_cef_binding"
 version = "0.1.0"
 authors = ["patr0nus <dk4rest@gmail.com>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
-libloading = "0.7"
+chairgap_cef_wrapper = { path = "../wrapper" }
 
 [build-dependencies]
-bindgen = "0.57"
 cc = "1.0"
+bindgen = "0.55"
